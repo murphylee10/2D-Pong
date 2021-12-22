@@ -4,8 +4,6 @@ from sys import exit
 
 from pygame.constants import MOUSEBUTTONDOWN
 
-# ToDo: Refactoring (put images into seperate folders), main menu, and AI bot, SOUND, TRAIL?, Inc ball speed for AI
-
 class Paddle(pygame.sprite.Sprite):
     speed = 10
     def __init__(self, num):
