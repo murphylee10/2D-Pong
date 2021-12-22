@@ -166,12 +166,18 @@ class Ball(pygame.sprite.Sprite):
             self.vy = normalisedIntersectionPoint * self.speed
 
             # Prevent an AI stalemate
-            if (paddle1Choice == 1 and paddle2Choice == 1) and (self.vy < 0.1 and self.vy > -0.1):
+            if (paddle1Choice == 1 and paddle2Choice == 1) and (self.vy < 1.0 and self.vy > -1.0):
                 self.vy = self.speed * 0.5
+
+            # AI stalemate 2
+            if (paddle1Choice == 1 and paddle2Choice == 1) and (self.vy == 2.909090909090909 or self.vy == -2.909090909090909):
+                self.vy = round(self.vy, 0)
 
         else:
             self.vx = -self.vx
             self.vy = 0
+
+        print(self.vy)
 
         # If ball is stuck on top of paddle, send it off by moving the ball in desired direction
         while (self.rect.top <= paddle.rect.top or self.rect.bottom >= paddle.rect.bottom) and pygame.sprite.collide_rect(self, paddle):
@@ -330,7 +336,7 @@ class GameState():
                     menu_music.stop()
 
                     # Assign different game states dependding on the dropbox selection
-                    if paddle1Choice + paddle2Choice == 1 or paddle1Choice + paddle2Choice == 2:
+                    if paddle1Choice + paddle2Choice == 1:
                         self.state = "one_player_game"
                     else:
                         self.state = "two_player_game"
@@ -436,7 +442,7 @@ class GameState():
                     "Paddle 2", ["Player", "Computer"]
                 )
                 scores = [0, 0]
-                round = 1
+                roundNum = 1
             
             if not game_active:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
