@@ -177,8 +177,6 @@ class Ball(pygame.sprite.Sprite):
             self.vx = -self.vx
             self.vy = 0
 
-        print(self.vy)
-
         # If ball is stuck on top of paddle, send it off by moving the ball in desired direction
         while (self.rect.top <= paddle.rect.top or self.rect.bottom >= paddle.rect.bottom) and pygame.sprite.collide_rect(self, paddle):
             self.ball_movement()
@@ -470,6 +468,9 @@ class GameState():
         # Display round if it's single player mode
         if game_state.state == "one_player_game":
             display_round(roundNum)
+        # Otherwise display prompt
+        else:
+            screen.blit(prompt_surf, prompt_rect)
 
         # Select a winner if the one of the players scored 10 points
         if self.state == "two_player_game" and scores[0] >= 10:
@@ -642,6 +643,9 @@ playButton_rect = playButton_surf.get_rect(center = (600, 500))
 
 dashes_surf = pygame.image.load('graphics/Background/Dashes.png').convert_alpha()
 dashes_rect = dashes_surf.get_rect(center = (WIDTH/2, HEIGHT/2))
+
+prompt_surf = font_small.render('10 Points to Win!', False, BLACK)
+prompt_rect = prompt_surf.get_rect(center = (600, 20))
 
 label_1 = ""
 label_2 = ""
